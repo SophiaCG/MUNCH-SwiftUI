@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CardView: View {
     @State var recipe: Recipe
+    @State var isPresented: Bool = false
+    @State var selectedRecipe: Recipe?
     // MARK: - Drawing Constant
     let cardGradient = Gradient(colors: [Color.black.opacity(0.0), Color.black.opacity(0.5)])
 
@@ -54,6 +56,18 @@ struct CardView: View {
         .cornerRadius(8)
         .offset(x: recipe.x, y: recipe.y)
         .rotationEffect(.init(degrees: recipe.degree))
+        .sheet(isPresented: $isPresented) {
+            DetailsView(recipe: recipe)
+        }
+//        .sheet(item: $selectedRecipe, content: { item in
+//            DetailsView(recipe: item)
+//        })
+        .onTapGesture() {
+            isPresented = true
+//            selectedRecipe = recipe
+            print("TITLE: \(recipe.title)")
+        }
+
         .gesture (
             DragGesture()
                 .onChanged { value in

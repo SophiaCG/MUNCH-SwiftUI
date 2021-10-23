@@ -31,18 +31,11 @@ struct ContentView: View {
                 ZStack{
                     ForEach(recipes) { recipe in
                         CardView(recipe: recipe)
-                            .onTapGesture() {
-                                isPresented = true
-                                selectedRecipe = recipe
-                            }
 
                     }
                 }
                 .padding(8)
                 .zIndex(1.0)
-                .sheet(item: $selectedRecipe, content: { item in
-                    DetailsView(recipe: item)
-                })
                 .onAppear() {
                     ViewModel().getRecipes { (recipes) in
                         self.recipes = recipes.recipes
