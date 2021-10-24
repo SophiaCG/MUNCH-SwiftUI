@@ -39,28 +39,6 @@ struct CardView: View {
             .padding()
             .foregroundColor(.white)
 
-//            ZStack(alignment: Alignment(horizontal: .center, vertical: .top), content: {
-//                (recipe.offset > 0 ? Color.green : Color.red)
-//                    .opacity(recipe.offset != 0 ? 0.7 : 0)
-//                
-//                HStack {
-//                    if recipe.offset < 0 {
-//                        Spacer()
-//                    }
-//                    
-//                    Text(recipe.offset == 0 ? "" : (recipe.offset > 0 ? "MUNCH!" : "REJECTED!"))
-//                        .font(.title)
-//                        .fontWeight(.bold)
-//                        .foregroundColor(.white)
-//                        .padding(.top, 25)
-//                        .padding(.horizontal)
-//                    
-//                    if recipe.offset > 0 {
-//                        Spacer()
-//                    }
-//                }
-//            })
-
             HStack {
                 Image("yes")
                     .resizable()

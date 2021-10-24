@@ -23,13 +23,6 @@ struct LogInView: View {
                     
                     VStack {
                         ContentView()
-                        Button {
-                            viewModel.signOut()
-                        } label: {
-                            Text("Sign Out")
-                                .foregroundColor(.white)
-                                .padding(30)
-                        }
                     }
 
                 } else {

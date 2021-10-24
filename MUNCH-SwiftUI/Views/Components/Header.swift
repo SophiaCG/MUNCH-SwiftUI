@@ -9,25 +9,31 @@ import SwiftUI
 
 struct Header: View {
     
+    @EnvironmentObject var viewModel: LogInSignUpVM
     @Binding var heartTapped: Bool
     
     var body: some View {
-        HStack {
+        HStack(alignment: .center) {
+            
+            Button {
+                viewModel.signOut()
+            } label: {
+                Text("Sign Out")
+                    .bold()
+                    .font(.title3)
+                    .padding(.trailing, 40)
+
+            }
+            
             Button(action: {
                 heartTapped = true
             }) {
-                Image(systemName: heartTapped ? "heart.fill" : "heart")
-                    .resizable().aspectRatio(contentMode: .fit).frame(height:30)
-                    .foregroundColor(heartTapped ? .red : .black)
+                Text("MUNCH!")
+                    .foregroundColor(heartTapped ? .green : .black)
+                    .font(.title)
+                    .bold()
+
             }
-            
-            Spacer()
-            
-            Text("MUNCH!")
-                .font(.title)
-                .bold()
-            
-            Spacer()
 
             Button(action: {
                 heartTapped = false
@@ -35,9 +41,10 @@ struct Header: View {
                 Image(systemName: heartTapped ? "bookmark" : "bookmark.fill")
                     .resizable().aspectRatio(contentMode: .fit).frame(height:30)
                     .foregroundColor(heartTapped ? .black : .green)
+                    .padding(.leading, 80)
+
             }
         }
-        .padding(.horizontal, 30)
         .padding(.vertical, 15)
     }
 }
