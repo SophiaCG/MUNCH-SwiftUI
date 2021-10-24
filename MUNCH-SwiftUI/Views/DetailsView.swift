@@ -26,11 +26,11 @@ struct DetailsView: View {
                             .bold()
                             .font(.title3)
                     // Servings
-                    Text("$\(recipe.pricePerServing) per serving for \(recipe.servings) servings")
+                    Text("$\(String(format: "%.00f", recipe.pricePerServing)) per serving for \(recipe.servings) servings")
                         .bold()
                         .font(.title3)
 
-                }.padding(.vertical, 20)
+                }.padding(.vertical, 15)
             
                 // Image
                 AsyncImage(url: URL(string: recipe.image != nil ? recipe.image as! String : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")!,
@@ -44,21 +44,23 @@ struct DetailsView: View {
                     .font(.subheadline)
                 
                 // Ingredients
-                    if recipe.extendedIngredients != [] {
-                        Text("Ingredients:")
+                if recipe.extendedIngredients != [] {
+                    Text("Ingredients:")
+                        .bold()
+                        .font(.title2)
+                        .padding(.top, 15)
+                    ForEach(recipe.extendedIngredients!, id: \.self) { ingredient in
+                        Text("• \(ingredient.original)" as String)
                             .bold()
-                            .font(.title2)
-                        ForEach(recipe.extendedIngredients!, id: \.self) { ingredient in
-                            Text("• \(ingredient.original)" as String)
-                                .bold()
-                                .font(.title3)
-                        }
+                            .font(.title3)
                     }
+                }
                 
                 // Instructions
                 Text("Instructions:")
                     .bold()
                     .font(.title2)
+                    .padding(.top, 15)
                 Text("\(recipe.instructions.html2String)")
                     .bold()
                     .font(.title3)

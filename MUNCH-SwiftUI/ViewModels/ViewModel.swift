@@ -32,7 +32,6 @@ class ViewModel: ObservableObject {
                 
                 DispatchQueue.main.async {
                     self.recipes = results.recipes
-//                    self.recipes.compactMap { $0 }
 
                     print("\n\nTESTINGIGNEINIG: \(type(of: self.recipes[0]))")
                     completion(results)

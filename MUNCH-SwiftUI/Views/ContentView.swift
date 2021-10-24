@@ -12,7 +12,7 @@ struct ContentView: View {
 
     @State var recipes = [Recipe]()
     @State var isPresented: Bool = false
-    @State var heartTapped: Bool = true
+    @State var heartTapped: Bool = false
 
     var body: some View {
         
