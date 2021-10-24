@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct CardView: View {
+    
+    @Environment(\.managedObjectContext) var context
     @State var recipe: Recipe
     @State var isPresented: Bool = false
     @State var selectedRecipe: Recipe?
-    // MARK: - Drawing Constant
+
     let cardGradient = Gradient(colors: [Color.black.opacity(0.0), Color.black.opacity(0.5)])
 
     var body: some View {
@@ -24,7 +26,7 @@ struct CardView: View {
 
 
             // Linear Gradient
-//            LinearGradient(gradient: cardGradient, startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: cardGradient, startPoint: .top, endPoint: .bottom)
             VStack {
                 Spacer()
                 VStack(alignment: .leading){
@@ -59,13 +61,8 @@ struct CardView: View {
         .sheet(isPresented: $isPresented) {
             DetailsView(recipe: recipe)
         }
-//        .sheet(item: $selectedRecipe, content: { item in
-//            DetailsView(recipe: item)
-//        })
         .onTapGesture() {
             isPresented = true
-//            selectedRecipe = recipe
-            print("TITLE: \(recipe.title)")
         }
 
         .gesture (
@@ -84,7 +81,7 @@ struct CardView: View {
                         case 0...100:
                             recipe.x = 0; recipe.degree = 0; recipe.y = 0
                         case let x where x > 100:
-                            recipe.x = 500; recipe.degree = 12
+                            recipe.x = 500; recipe.degree = 12; saveRecipe(recipe: recipe)
                         case (-100)...(-1):
                             recipe.x = 0; recipe.degree = 0; recipe.y = 0
                         case let x where x < -100:
@@ -95,5 +92,20 @@ struct CardView: View {
                     }
                 }
         )
+    }
+    
+    private func saveRecipe(recipe: Recipe) {
+        
+        if recipe.id != nil {
+            let recipeData = Item(context: context)
+            
+            recipeData.id = String(recipe.id!)
+            recipeData.title = recipe.title
+            recipeData.image = recipe.image
+            recipeData.readyInMinutes = String(recipe.readyInMinutes)
+            
+            try? context.save()
+        }
+        
     }
 }

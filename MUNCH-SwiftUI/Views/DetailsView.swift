@@ -6,12 +6,10 @@
 //
 
 import SwiftUI
-import WebKit
 
 struct DetailsView: View {
     
     @State var recipe: Recipe
-    @State var summary: String = ""
     
     var body: some View {
         
@@ -68,15 +66,12 @@ struct DetailsView: View {
                 // Other
             
             
-            }
-            .padding()
-            .onAppear() {
-                self.summary = recipe.summary
-            }
+            }.padding()
         }
     }
 }
 
+// Code from Leo Dabus: https://stackoverflow.com/questions/28124119/convert-html-to-plain-text-in-swift
 extension Data {
     var html2AttributedString: NSAttributedString? {
         do {

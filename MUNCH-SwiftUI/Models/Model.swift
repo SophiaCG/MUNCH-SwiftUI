@@ -14,6 +14,10 @@ struct Recipes: Codable {
     var recipes: [Recipe]
 }
 
+struct Details: Codable {
+    var details: Recipe
+}
+
 struct Recipe: Codable, Identifiable {
     let vegetarian: Bool
     let vegan: Bool
