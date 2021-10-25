@@ -15,3 +15,7 @@ This project can only be run by acquiring an API key through Spoonacular (for fr
 
 ## Demo Pictures
 
+![MunchDemoSS1](https://user-images.githubusercontent.com/64823305/138618945-bdf233b5-578b-4308-adfc-10586ef16292.jpeg)
+![MunchDemoSS2](https://user-images.githubusercontent.com/64823305/138618951-96074759-c5c8-4e15-bd45-5dbf54ccbff9.jpeg)
+![MunchDemoSS3](https://user-images.githubusercontent.com/64823305/138618954-8d524ab7-bb8d-4069-ba22-a8e66cedfc52.jpeg)
+
