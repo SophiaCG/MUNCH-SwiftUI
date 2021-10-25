@@ -9,10 +9,11 @@ import Foundation
 
 class ViewModel: ObservableObject {
     
-    @Published var recipes = [Recipe]()
-    @Published var details = Optional<Recipe>.none
-    let apiKey = "API-KEY-HERE"
+    @Published var recipes = [Recipe]()     // Holds multiple recipes for cards
+    @Published var details = Optional<Recipe>.none      // Holds details for one recipe in list
+    let apiKey = "d2d9b7ba70d64ecd85ab8eecf9cfd8fc"     // API key can be given here: https://spoonacular.com/food-api
     
+//MARK: - Retrieves multiple recipes that will be displayed to the user in a deck of cards
     func getRecipes(completion:@escaping (Recipes) -> ()) {
         
         guard let url = URL(string: "https://api.spoonacular.com/recipes/random?number=3&apiKey=\(apiKey)") else {
@@ -33,7 +34,6 @@ class ViewModel: ObservableObject {
                 DispatchQueue.main.async {
                     self.recipes = results.recipes
 
-                    print("\n\nTESTINGIGNEINIG: \(type(of: self.recipes[0]))")
                     completion(results)
                 }
             } catch DecodingError.dataCorrupted(let context) {
@@ -55,6 +55,7 @@ class ViewModel: ObservableObject {
         task.resume()
     }
     
+//MARK: - Retrieves details of a recipe that the user has bookmarked
     func getDetails(for id: String, completion:@escaping (Recipe) -> ()) {
         
         guard let url = URL(string: "https://api.spoonacular.com/recipes/\(id)/information?apiKey=\(apiKey)") else {
@@ -70,12 +71,11 @@ class ViewModel: ObservableObject {
             
             do {
                 let results = try JSONDecoder().decode(Recipe.self, from: data!)
-                print("RESULTS: \(results)")
+//                print("RESULTS: \(results)")
                 
                 DispatchQueue.main.async {
                     self.details = results
 
-                    print("\n\nTESTINGIGNEINIG: \(String(describing: self.details))")
                     completion(results)
                 }
             } catch DecodingError.dataCorrupted(let context) {

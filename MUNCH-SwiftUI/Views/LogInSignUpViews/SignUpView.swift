@@ -8,10 +8,9 @@
 import Foundation
 import SwiftUI
 
+//MARK: - Users enter their emails and passwords to Sign Up
 struct SignUpView: View {
     
-//    @State var email: String = ""
-//    @State var password: String = ""
     @EnvironmentObject var viewModel: LogInSignUpVM
     
     var body: some View {
@@ -34,6 +33,7 @@ struct SignUpView: View {
                                 .padding(50)
                                 .multilineTextAlignment(.center)
                             
+                            // Email text field
                             TextField("Email Address", text: $viewModel.email)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
@@ -46,6 +46,7 @@ struct SignUpView: View {
                                         .frame(width: UIScreen.main.bounds.width * 0.9, height: 70)
                                 )
                             
+                            // Email error message
                             TextField("", text: $viewModel.errorMessage)
                                 .disabled(true)
                                 .foregroundColor(.red)
@@ -53,6 +54,7 @@ struct SignUpView: View {
                                 .padding(.leading, 40)
                                 .font(.subheadline)
 
+                            // Password text field
                             SecureField("Password", text: $viewModel.password)
                                 .autocapitalization(.none)
                                 .disableAutocorrection(true)
@@ -65,6 +67,7 @@ struct SignUpView: View {
                                         .frame(width: UIScreen.main.bounds.width * 0.9, height: 70)
                                 )
                             
+                            // Password error message
                             TextField("", text: $viewModel.errorMessage2)
                                 .disabled(true)
                                 .foregroundColor(.red)
@@ -72,10 +75,12 @@ struct SignUpView: View {
                                 .padding(.leading, 40)
                                 .font(.subheadline)
                             
+                            // Button that leads to Log In page
                             NavigationLink(destination: LogInView()) {
                                 Text("Already have an account? Login here!")
                             }
                             
+                            // Sign Up button
                             Button(action: {
                                 guard !viewModel.email.isEmpty, !viewModel.password.isEmpty else {
                                     return

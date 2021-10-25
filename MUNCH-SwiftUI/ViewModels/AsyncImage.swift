@@ -10,6 +10,7 @@ import SwiftUI
 import UIKit
 import Combine
 
+//MARK: - Converts jpeg images to UIImages
 struct AsyncImage<Placeholder: View>: View {
     @StateObject private var loader: ImageLoader
     private let placeholder: Placeholder

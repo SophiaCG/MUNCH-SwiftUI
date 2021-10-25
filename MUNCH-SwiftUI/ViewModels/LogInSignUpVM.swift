@@ -8,6 +8,7 @@
 import FirebaseAuth
 import Combine
 
+//MARK: - User inputs their email and password to either Log In or Sign Up
 // Firebase code from: https://www.youtube.com/watch?v=vPCEIPL0U_k&t=15s
 enum EmailStatus {
     case empty
@@ -24,7 +25,6 @@ enum PasswordStatus {
 class LogInSignUpVM: ObservableObject {
 
     @Published var loggedIn = false
-
     @Published var email: String = ""
     @Published var password: String = ""
     @Published var isValid = false
@@ -67,7 +67,6 @@ class LogInSignUpVM: ObservableObject {
     }
 
 //MARK: - Combine functions for email and password text fields
-
     private var isEmailEmpty: AnyPublisher<Bool, Never> {
         $email
             .debounce(for: 0.8, scheduler: RunLoop.main)

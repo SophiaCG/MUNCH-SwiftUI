@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//MARK: - Shows details of selected recipe in the users' bookmarked recipes list
 struct DetailsView: View {
     
     @State var recipe: Recipe
@@ -33,7 +34,7 @@ struct DetailsView: View {
                 }.padding(.vertical, 15)
             
                 // Image
-                AsyncImage(url: URL(string: recipe.image != nil ? recipe.image as! String : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")!,
+                AsyncImage(url: URL(string: recipe.image != nil ? recipe.image! : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")!,
                            placeholder: { Text("Loading ...") },
                            image: { Image(uiImage: $0).resizable() })
                     .aspectRatio(contentMode: .fit)
@@ -73,6 +74,7 @@ struct DetailsView: View {
     }
 }
 
+//MARK: - Converts HTML text to String
 // Code from Leo Dabus: https://stackoverflow.com/questions/28124119/convert-html-to-plain-text-in-swift
 extension Data {
     var html2AttributedString: NSAttributedString? {

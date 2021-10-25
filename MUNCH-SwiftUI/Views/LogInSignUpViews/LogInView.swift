@@ -8,10 +8,9 @@
 import Foundation
 import SwiftUI
 
+//MARK: - Users enter their emails and passwords to Log In
 struct LogInView: View {
     
-//    @State var email: String = ""
-//    @State var password: String = ""
     @EnvironmentObject var viewModel: LogInSignUpVM
 
     var body: some View {
@@ -20,10 +19,7 @@ struct LogInView: View {
             NavigationView {
                 
                 if viewModel.isLoggedIn {
-                    
-                    VStack {
-                        ContentView()
-                    }
+                    ContentView()
 
                 } else {
 
@@ -37,6 +33,7 @@ struct LogInView: View {
                             .padding(50)
                             .multilineTextAlignment(.center)
                         
+                        // Email text field
                         TextField("Email Address", text: $viewModel.email)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
@@ -48,6 +45,8 @@ struct LogInView: View {
                                     .foregroundColor(Color(.secondarySystemFill))
                                     .frame(width: UIScreen.main.bounds.width * 0.9, height: 70)
                             )
+                        
+                        // Email error message
                         TextField("", text: $viewModel.errorMessage)
                             .disabled(true)
                             .foregroundColor(.red)
@@ -55,7 +54,7 @@ struct LogInView: View {
                             .padding(.leading, 40)
                             .font(.subheadline)
 
-                        
+                        // Password text field
                         SecureField("Password", text: $viewModel.password)
                             .autocapitalization(.none)
                             .disableAutocorrection(true)
@@ -68,6 +67,7 @@ struct LogInView: View {
                                     .frame(width: UIScreen.main.bounds.width * 0.9, height: 70)
                             )
                         
+                        // Password error message
                         TextField("", text: $viewModel.errorMessage2)
                             .disabled(true)
                             .foregroundColor(.red)
@@ -75,7 +75,7 @@ struct LogInView: View {
                             .padding(.leading, 40)
                             .font(.subheadline)
 
-                                   
+                        // Log In button
                         Button(action: {
                             guard !viewModel.email.isEmpty, !viewModel.password.isEmpty else {
                                 return

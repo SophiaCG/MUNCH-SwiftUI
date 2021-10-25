@@ -9,13 +9,16 @@ import Foundation
 import SwiftUI
 import CoreData
 
+//MARK: - Shows users' list of recipes that they bookmarked
 struct RecipesList: View {
     
+    // Core Data
     @FetchRequest(entity: Item.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Item.title, ascending: true)])
     var recipeData: FetchedResults<Item>
-    @State var details: Recipe?
-    @State var trash: Bool = false
-    @Binding var isPresented: Bool
+    
+    @State var details: Recipe?     // contains details of selected recipe
+    @State var trash: Bool = false  // displays trash can to delete a recipe
+    @Binding var isPresented: Bool  // shows modal sheet
     
     var body: some View {
         
@@ -38,7 +41,7 @@ struct RecipesList: View {
                             
                             Spacer()
                             
-                            AsyncImage(url: URL(string: recipe.image ?? "")!,
+                            AsyncImage(url: URL(string: recipe.image != nil ? recipe.image! : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")!,
                                        placeholder: { Text("Loading ...") },
                                        image: { Image(uiImage: $0).resizable() })
                                 .frame(width: UIScreen.main.bounds.size.width * 0.25, height: UIScreen.main.bounds.size.height * 0.1)
@@ -54,7 +57,7 @@ struct RecipesList: View {
                         .padding(.horizontal, 20)
                         .padding(.vertical, 3)
                         
-                        
+                        // Button to delete recipe is revealed when user does long press gesture
                         if trash {
                             HStack {
                                 Spacer()
@@ -68,15 +71,14 @@ struct RecipesList: View {
                         }
                     }
                     .onTapGesture {
-                        print("SHORT TAP!")
                         isPresented = true
+                        
+                        // API call to get details of a selected recipe
                         ViewModel().getDetails(for: recipe.id!) { (details) in
                             self.details = details
-                            print("DETAILS: \(String(describing: self.details))")
                         }
                     }
                     .onLongPressGesture() {
-                        print("LONG TAP!")
                         trash.toggle()
                     }
                 }
@@ -88,11 +90,14 @@ struct RecipesList: View {
         .sheet(isPresented: $isPresented) {
             if details != nil {
                 DetailsView(recipe: details!)
+            } else {
+                Text("No details to display.")
             }
         }
     }
 }
 
+//MARK: - Button to delete recipe
 struct DeleteButton: View {
     
     @Environment(\.managedObjectContext) var context

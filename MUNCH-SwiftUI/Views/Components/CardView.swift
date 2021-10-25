@@ -7,18 +7,24 @@
 
 import SwiftUI
 
+//MARK: - Deck of cards that displays random recipes to user
 struct CardView: View {
     
+    // Core Data
     @Environment(\.managedObjectContext) var context
-    @State var recipe: Recipe
-    @State var isPresented: Bool = false
-    @State var selectedRecipe: Recipe?
+    
+    @State var recipe: Recipe   // one recipe per card
+    @State var isPresented: Bool = false    // shows modal sheet
+    @State var selectedRecipe: Recipe?  // user taps on card to see details of selected recipe
 
     let cardGradient = Gradient(colors: [Color.black.opacity(0.0), Color.black.opacity(0.5)])
 
     var body: some View {
+        
         ZStack(alignment: .topLeading) {
-            AsyncImage(url: URL(string: recipe.image != nil ? recipe.image as! String : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")!,
+            
+            // Image of recipe
+            AsyncImage(url: URL(string: recipe.image != nil ? recipe.image! : "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg")!,
                        placeholder: { Text("Loading ...") },
                        image: { Image(uiImage: $0).resizable() })
                 .aspectRatio(contentMode: .fill)
@@ -27,6 +33,8 @@ struct CardView: View {
 
             // Linear Gradient
             LinearGradient(gradient: cardGradient, startPoint: .top, endPoint: .bottom)
+            
+            // Displays title of recipe and how long it'll take to make it
             VStack {
                 Spacer()
                 VStack(alignment: .leading){
@@ -39,6 +47,7 @@ struct CardView: View {
             .padding()
             .foregroundColor(.white)
 
+            // Stamps on the corner of the card when the user swipe right or left
             HStack {
                 Image("yes")
                     .resizable()
@@ -52,9 +61,7 @@ struct CardView: View {
                     .frame(width:150)
                     .opacity(Double(recipe.x/10 * -1 - 1))
             }
-
         }
-
         .cornerRadius(8)
         .offset(x: recipe.x, y: recipe.y)
         .rotationEffect(.init(degrees: recipe.degree))
@@ -64,13 +71,12 @@ struct CardView: View {
         .onTapGesture() {
             isPresented = true
         }
-
+        // Swipe function
         .gesture (
             DragGesture()
                 .onChanged { value in
                     withAnimation(.default) {
                         recipe.x = value.translation.width
-                        // MARK: - BUG 5
                         recipe.y = value.translation.height
                         recipe.degree = 7 * (value.translation.width > 0 ? 1 : -1)
                     }
@@ -94,6 +100,7 @@ struct CardView: View {
         )
     }
     
+    // Adds recipe to Core Data
     private func saveRecipe(recipe: Recipe) {
         
         if recipe.id != nil {

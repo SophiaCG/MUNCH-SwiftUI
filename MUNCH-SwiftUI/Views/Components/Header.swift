@@ -9,12 +9,13 @@ import SwiftUI
 
 struct Header: View {
     
-    @EnvironmentObject var viewModel: LogInSignUpVM
-    @Binding var heartTapped: Bool
+    @EnvironmentObject var viewModel: LogInSignUpVM     // calls view model to sign out
+    @Binding var heartTapped: Bool      // MUNCH! button is tapped or not
     
     var body: some View {
         HStack(alignment: .center) {
             
+            // Sign Out button
             Button {
                 viewModel.signOut()
             } label: {
@@ -25,6 +26,7 @@ struct Header: View {
 
             }
             
+            // MUNCH! button that displays recipe cards
             Button(action: {
                 heartTapped = true
             }) {
@@ -35,6 +37,7 @@ struct Header: View {
 
             }
 
+            // Bookmark button that displays recipe list
             Button(action: {
                 heartTapped = false
             }) {

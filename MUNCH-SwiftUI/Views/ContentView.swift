@@ -8,11 +8,12 @@
 import SwiftUI
 import CoreData
 
+//MARK: - Shows recipes cards (default) and recipes list
 struct ContentView: View {
 
     @State var recipes = [Recipe]()
-    @State var isPresented: Bool = false
-    @State var heartTapped: Bool = false
+    @State var isPresented: Bool = false    // Shows modal sheet
+    @State var heartTapped: Bool = false    // Shows recipes cards vs. recipes list
 
     var body: some View {
         
@@ -20,7 +21,8 @@ struct ContentView: View {
         Spacer()
         
         if heartTapped {
-
+            
+            // Cards of recipes
             ZStack {
                 ForEach(recipes) { recipe in
                     CardView(recipe: recipe)
@@ -29,6 +31,7 @@ struct ContentView: View {
             .padding(8)
             .zIndex(1.0)
             .onAppear() {
+                // API call to request random recipes
                 ViewModel().getRecipes { (recipes) in
                     self.recipes = recipes.recipes
                     print("RECIPES: \(recipes)")
@@ -36,6 +39,7 @@ struct ContentView: View {
             }
             
         } else {
+            // List of bookmarked recipes
             RecipesList(isPresented: $isPresented)
         }
     }
